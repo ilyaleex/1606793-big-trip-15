@@ -11,14 +11,15 @@ import {createRoutePointTemplate} from './view/route-point.js';
 
 const TEMPLATE_COUNT = 3;
 
-const render = (container, template, list) => {
-  container.insertAdjacentHTML(template, list);
+const render = (container, place, template) => {
+  container.insertAdjacentHTML(place, template);
 };
 
 const siteTripMainElement = document.querySelector('.trip-main');
 const siteTripInfoElement = document.querySelector('.trip-info');
 const siteTripControlsElement = document.querySelector('.trip-controls');
-const siteMenuElement = siteTripControlsElement.querySelector('trip-controls__navigation');
+const siteTripControlsFiltersElement = siteTripControlsElement.querySelector('.trip-controls__filters');
+const siteControlsNavigationElement = siteTripControlsElement.querySelector('.trip-controls__navigation');
 const siteTripEventsListElement = document.querySelector('.trip-events__list');
 const siteTripSortElement = document.querySelector('.trip-sort');
 
@@ -27,8 +28,8 @@ render(siteTripMainElement, createTripInfoTemplate(), 'afterbegin');
 render(siteTripMainElement, createRouteDataTemplate(), 'afterbegin');
 render(siteTripInfoElement, createTripPriceTemplate(), 'beforeend');
 
-render(siteTripControlsElement, createMenuTemplate(), 'afterbegin');
-render(siteMenuElement, createFiltersTemplate(), 'afterend');
+render(siteControlsNavigationElement, createMenuTemplate(), 'afterbegin');
+render(siteTripControlsFiltersElement, createFiltersTemplate(), 'beforeend');
 
 render(siteTripEventsListElement, createTripSortTemplate(), 'beforebegin');
 
