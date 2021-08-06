@@ -18,5 +18,10 @@
   },
   "engines": {
     "node": "12"
+  },
+  "dependencies": {
+    "dayjs": "1.10.6",
+    "flatpickr": "4.6.9",
+    "uuid": "3.4.0"
   }
 }
