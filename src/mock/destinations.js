@@ -1,5 +1,5 @@
 import {getRandomInt, getRandomArrayElements} from '../utils';
-import {DESTINATIONS, DESCRIPTIONS} from './waypoint-mocks';
+import {DESTINATIONS} from './waypoint-mocks';
 import {plugImage} from './waypoint-mocks';
 
 const MIN_COUNT_SENTENCES = 1;
@@ -23,10 +23,6 @@ const generateDescription = () => {
   ];
   return getRandomArrayElements(DESCRIPTIONS, getRandomInt(MIN_COUNT_SENTENCES, MAX_COUNT_SENTENCES)).join(' ');
 };
-
-// const generateDescription = () => {
-//   getRandomArrayElements(DESCRIPTIONS, getRandomInt(MIN_COUNT_SENTENCES, MAX_COUNT_SENTENCES)).join(' ');
-// };
 
 const generatePhotos = () => {
   const photos = [];
