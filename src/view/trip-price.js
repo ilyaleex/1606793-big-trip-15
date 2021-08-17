@@ -1,12 +1,12 @@
 import AbstractView from './abstract';
 
-const calculateItem = (sum, item) => (!item.offers || !(item.offers.length > 0))
+const calculateTripPrice = (sum, item) => (!item.offers || !(item.offers.length > 0))
   ? sum + item.price
-  : item.price + item.offers.reduce(calculateItem, sum);
+  : item.price + item.offers.reduce(calculateTripPrice, sum);
 
 export const createTripPriceTemplate = (points) => (
   `<p class="trip-info__cost">
-     Total: &euro;&nbsp;<span class="trip-info__cost-value">${points.reduce(calculateItem, 0)}</span>
+     Total: &euro;&nbsp;<span class="trip-info__cost-value">${points.reduce(calculateTripPrice, 0)}</span>
    </p>`
 );
 

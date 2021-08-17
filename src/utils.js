@@ -22,7 +22,3 @@ export const getLeadingZero = (number) => (number < 10) ? `0${number}` : `${numb
 
 export const getRandomId = () => uuidv4;
 
-export const RenderPosition = {
-  AFTERBEGIN: 'afterbegin',
-  BEFOREEND: 'beforeend',
-};

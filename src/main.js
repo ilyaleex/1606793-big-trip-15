@@ -3,14 +3,13 @@ import EventView from './view/event';
 import FiltersView from './view/filters';
 import EventListView from './view/trip-events-list';
 import TripSortView from './view/trip-sort';
-import RouteData from './view/route-data';
+import RouteInfo from './view/route-info';
 import MenuView from './view/menu';
 import TripPriceView from './view/trip-price';
 import TripInfoView from './view/trip-info';
 import NoEventView from './view/no-event';
 import {compareTimeStart} from './utils/dates';
-import {render, replace} from './utils/render';
-import {RenderPosition} from './utils';
+import {RenderPosition, render, replace} from './utils/render';
 
 import {generatePoint} from './mock/points';
 
@@ -77,7 +76,7 @@ const renderBoard = (events) => {
 
   const tripInfoComponent = new TripInfoView();
   render(tripMainElement, tripInfoComponent, RenderPosition.AFTERBEGIN);
-  render(tripInfoComponent, new RouteData(events), RenderPosition.BEFOREEND);
+  render(tripInfoComponent, new RouteInfo(events), RenderPosition.BEFOREEND);
   render(tripInfoComponent, new TripPriceView(events), RenderPosition.BEFOREEND);
 
 
@@ -86,8 +85,8 @@ const renderBoard = (events) => {
   const eventListComponent = new EventListView();
   render(tripEventsElement, eventListComponent, RenderPosition.BEFOREEND);
 
-  for (let i = 0; i < events.length; i++) {
-    renderEvent(eventListComponent.getElement(), events[i]);
+  for (events of events) {
+    renderEvent(eventListComponent.getElement(), events);
   }
 };
 

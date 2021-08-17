@@ -78,8 +78,8 @@ const createEditFormTemplate = (point = {}, isEdit = false) => {
     price = '',
   } = point;
 
-  const pointTypeFieldset = WAYPOINT_TYPES.map((pointType) => createEventTypeInputTemplate(pointType)).join('');
-  const destinationDatalist = DESTINATIONS.map((pointDestination) => createDestinationOptionTemplate(pointDestination)).join('');
+  const pointTypeFieldset = WAYPOINT_TYPES.map(createEventTypeInputTemplate).join('');
+  const destinationDatalist = DESTINATIONS.map(createDestinationOptionTemplate).join('');
   const editButton = (isEdit) ? '<button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button>' : '';
   const typeOffers = allOffers.find((item) => item.type === type).offers;
   const offersTemplate = (typeOffers && typeOffers.length > 0) ? createOffersTemplate(typeOffers, offers) : '';

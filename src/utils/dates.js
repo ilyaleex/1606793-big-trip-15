@@ -25,9 +25,9 @@ export const calculateTimeDifference = (dateA, dateB) => {
     return `${getLeadingZero(countOfDay)}D ${getLeadingZero(countOfHour)}H ${getLeadingZero(countOfMinutes)}M`;
   } else if (countOfHour > 0) {
     return `${getLeadingZero(countOfHour)}H ${getLeadingZero(countOfMinutes)}M`;
-  } else {
-    return `${getLeadingZero(countOfMinutes)}M`;
   }
+
+  return `${getLeadingZero(countOfMinutes)}M`;
 };
 
 export const compareTimeStart = (pointA, pointB) => pointA.timeStart - pointB.timeStart;

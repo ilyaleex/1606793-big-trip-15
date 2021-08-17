@@ -16,7 +16,7 @@ const createDatesTemplate =  (points) => {
     : `${humanizeDateDayMonth(dateStart)}&nbsp;&mdash;&nbsp;${humanizeDateDayMonth(dateEnd)}`;
 };
 
-const createRouteDataTemplate = (points) => {
+const createRouteInfoTemplate = (points) => {
   const destinations = points.map((point) => point.destination);
   return `<div class="trip-info__main">
     <h1 class="trip-info__title">${createRouteTemplate(destinations)}</h1>
@@ -25,13 +25,13 @@ const createRouteDataTemplate = (points) => {
   </div>`;
 };
 
-export default class RouteData extends AbstractView {
+export default class RouteInfo extends AbstractView {
   constructor(points) {
     super();
     this._points = points;
   }
 
   getTemplate() {
-    return createRouteDataTemplate(this._points);
+    return createRouteInfoTemplate(this._points);
   }
 }
