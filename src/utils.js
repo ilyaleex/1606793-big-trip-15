@@ -21,4 +21,3 @@ export function getRandomArrayElements (array, count) {
 export const getLeadingZero = (number) => (number < 10) ? `0${number}` : `${number}`;
 
 export const getRandomId = () => uuidv4;
-
