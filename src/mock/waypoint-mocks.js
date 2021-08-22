@@ -21,5 +21,13 @@ export const DESTINATIONS = [
   'Osaka',
 ];
 
+export const FILTERS = ['Everything', 'Future', 'Past'];
+
+export const SortType = {
+  DAY: 'day',
+  TIME: 'time',
+  PRICE: 'price',
+};
+
 export const plugImage = () => `http://picsum.photos/248/152?r=${Math.random()}`;
 

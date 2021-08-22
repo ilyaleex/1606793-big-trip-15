@@ -30,4 +30,8 @@ export const calculateTimeDifference = (dateA, dateB) => {
   return `${getLeadingZero(countOfMinutes)}M`;
 };
 
+export const calculateDuration = (event) => event.timeEnd - event.timeStart;
+
 export const compareTimeStart = (pointA, pointB) => pointA.timeStart - pointB.timeStart;
+export const compareDuration = (eventB, eventA) => calculateDuration(eventB) - calculateDuration(eventA);
+export const comparePrice = (eventB, eventA) => eventB.price - eventA.price;
