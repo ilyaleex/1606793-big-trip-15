@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import {WAYPOINT_TYPES, DESTINATIONS} from './waypoint-mocks';
 import {allOffers} from './offers.js';
 import {getRandomInt, getRandomArrayElement, getRandomArrayElements} from '../utils';
+import {nanoid} from 'nanoid';
 
 const generateType = () => getRandomArrayElement(WAYPOINT_TYPES);
 
@@ -23,6 +24,7 @@ export const generatePoint = () => {
   const timeEnd = dayjs(timeStart).add(getRandomInt(30, 2160), 'minute').toDate();
 
   return {
+    id: nanoid(),
     type,
     destination,
     offers: getRandomArrayElements(typeOffers, getRandomInt(0, typeOffers.length)),
