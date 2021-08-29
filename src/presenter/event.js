@@ -21,6 +21,7 @@ export default class Event {
     this._handleCloseClick = this._handleCloseClick.bind(this);
     this._handleSubmitForm = this._handleSubmitForm.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
+    this._escKeydownHandler = this._escKeydownHandler.bind(this);
   }
 
   init(event) {
@@ -67,22 +68,23 @@ export default class Event {
 
   _replaceEventToForm() {
     replace(this._editFormComponent, this._eventComponent);
-    document.addEventListener('keydown', this._EscKeydownHandler);
+    document.addEventListener('keydown', this._escKeydownHandler);
     this._changeMode();
     this._mode = Mode.EDITING;
   }
 
   _replaceFormToEvent() {
     replace(this._eventComponent, this._editFormComponent);
-    document.removeEventListener('keydown', this._EscKeydownHandler);
+    document.removeEventListener('keydown', this._escKeydownHandler);
     this._mode = Mode.DEFAULT;
   }
 
-  _EscKeydownHandler(evt) {
+  _escKeydownHandler(evt) {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
+      this._editFormComponent.reset(this._event);
       this._replaceFormToEvent();
-      document.removeEventListener('keydown', this._EscKeydownHandler);
+      document.removeEventListener('keydown', this._escKeydownHandler);
     }
   }
 
@@ -94,7 +96,8 @@ export default class Event {
     this._replaceFormToEvent();
   }
 
-  _handleSubmitForm() {
+  _handleSubmitForm(task) {
+    this._changeData(task);
     this._replaceFormToEvent();
   }
 

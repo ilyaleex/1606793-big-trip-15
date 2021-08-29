@@ -1,4 +1,4 @@
-export const WAYPOINT_TYPES = [
+export const EVENT_TYPES = [
   'Taxi',
   'Bus',
   'Train',

@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import {WAYPOINT_TYPES, DESTINATIONS} from './waypoint-mocks';
+import {EVENT_TYPES, DESTINATIONS} from './waypoint-mocks';
 import {allOffers} from './offers.js';
 import {getRandomInt, getRandomArrayElement, getRandomArrayElements} from '../utils';
 import {nanoid} from 'nanoid';
 
-const generateType = () => getRandomArrayElement(WAYPOINT_TYPES);
+const generateType = () => getRandomArrayElement(EVENT_TYPES);
 
 const generateDestination = () => getRandomArrayElement(DESTINATIONS);
 

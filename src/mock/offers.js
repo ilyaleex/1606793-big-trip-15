@@ -1,5 +1,5 @@
 import {getRandomInt, getRandomArrayElement} from '../utils';
-import {WAYPOINT_TYPES} from './waypoint-mocks';
+import {EVENT_TYPES} from './waypoint-mocks';
 
 const MAX_COUNT_OFFERS = 5;
 
@@ -28,7 +28,7 @@ const generateOffersForType = (type, countOffers) => {
 
 const generateAllOffers = () => {
   const offersForTypes = [];
-  for (const waypointType of WAYPOINT_TYPES) {
+  for (const waypointType of EVENT_TYPES) {
     offersForTypes.push({
       type: waypointType,
       offers: generateOffersForType(waypointType, getRandomInt(0, MAX_COUNT_OFFERS)),
