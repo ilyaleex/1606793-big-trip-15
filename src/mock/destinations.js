@@ -40,8 +40,8 @@ const generateAllDestinations = () => {
   for (const destination of DESTINATIONS) {
     descriptions.push({
       name: destination,
-      description: getRandomInt(0, 1) ? generateDescription() : '',
-      pictures: getRandomInt(0, 1) ? generatePhotos() : [],
+      description: getRandomInt(0, 1) ? generateDescription() : null,
+      pictures: getRandomInt(0, 1) ? generatePhotos() : null,
     });
   }
   return descriptions;
