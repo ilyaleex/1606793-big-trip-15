@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
-import {EVENT_TYPES, DESTINATIONS} from './waypoint-mocks';
+import {DESTINATIONS} from './waypoint-mocks';
+import {EVENT_TYPES} from '../const';
 import {allOffers} from './offers.js';
-import {getRandomInt, getRandomArrayElement, getRandomArrayElements} from '../utils';
+import {getRandomInt, getRandomArrayElement, getRandomArrayElements} from '../utils/common';
 import {nanoid} from 'nanoid';
 
 const generateType = () => getRandomArrayElement(EVENT_TYPES);
@@ -16,7 +17,7 @@ const generateTimeStart = () => {
   return dayjs().add(daysGap, 'day').toDate();
 };
 
-export const generatePoint = () => {
+export const generateEvent = () => {
   const type = generateType();
   const typeOffers = allOffers.find((item) => item.type === type).offers;
   const destination = generateDestination();

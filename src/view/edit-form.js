@@ -1,15 +1,15 @@
 import SmartView from './smart';
-import {DESTINATIONS, EVENT_TYPES} from '../mock/waypoint-mocks';
+import {DESTINATIONS} from '../mock/waypoint-mocks';
+import {EVENT_TYPES} from '../const';
 import {humanizeDateTime} from '../utils/dates';
-import {allDestinations} from '../mock/destinations';
-import {allOffers} from '../mock/offers';
+import he from 'he';
 
 const BLANK_EVENT = {
   type: EVENT_TYPES[0],
-  destination: '',
+  destination: DESTINATIONS[0],
   offers: [],
-  timeStart: '',
-  timeEnd: '',
+  timeStart: Date.now(),
+  timeEnd: Date.now(),
   price: '',
 };
 
@@ -21,7 +21,7 @@ const createEventTypeInputTemplate = (type, isCurrentType) => {
   </div>`;
 };
 
-const createDestinationOptionTemplate = (destination) => `<option value="${destination}"></option>`;
+const createDestinationOptionTemplate = (destination) => `<option value="${he.encode(destination)}"></option>`;
 
 const createOfferTemplate = ({title, price}, isChecked = false) => {
   const checkedStatus = (isChecked) ? 'checked' : '';
@@ -73,7 +73,7 @@ const createDestinationInfoTemplate = ({description, pictures}, isDescription, i
   </section>`
 );
 
-const createEditFormTemplate = (data, isEdit = false) => {
+const createEditFormTemplate = (data, currentOffersOfType, isEdit = false) => {
   const {
     type,
     destination,
@@ -86,9 +86,10 @@ const createEditFormTemplate = (data, isEdit = false) => {
     isPhotos,
   } = data;
 
-  const offersOfType = allOffers.find((item) => item.type === type).offers.slice();
+  const offersOfType = currentOffersOfType ? currentOffersOfType.slice() : null;
   const pointTypeFieldset = EVENT_TYPES.map(createEventTypeInputTemplate).join('');
   const destinationDatalist = DESTINATIONS.map(createDestinationOptionTemplate).join('');
+  const resetButton = (isEdit) ? '<button class="event__reset-btn" type="reset">Delete</button>' : '<button class="event__reset-btn" type="reset">Cancel</button>';
   const editButton = (isEdit) ? '<button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button>' : '';
   const offersTemplate = (offersOfType && offersOfType.length) ? createOffersTemplate(offersOfType, offers) : '';
   const informationTemplate = (isDescription || isPhotos) ? createDestinationInfoTemplate(information, isDescription, isPhotos) : '';
@@ -115,7 +116,7 @@ const createEditFormTemplate = (data, isEdit = false) => {
           <label class="event__label  event__type-output" for="event-destination-1">
             ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destination)}" list="destination-list-1">
           <datalist id="destination-list-1">
             ${destinationDatalist}
           </datalist>
@@ -139,6 +140,7 @@ const createEditFormTemplate = (data, isEdit = false) => {
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
         <button class="event__reset-btn" type="reset">Delete</button>
+        ${resetButton}
         ${editButton}
       </header>
       <section class="event__details">
@@ -151,9 +153,11 @@ const createEditFormTemplate = (data, isEdit = false) => {
 };
 
 export default class EditForm extends SmartView {
-  constructor(event = BLANK_EVENT, isEdit) {
+  constructor(event = BLANK_EVENT, destinationInfo, currentOffersOfType, isEdit) {
     super();
-    this._data = EditForm.parseEventToData(event);
+    this._data = EditForm.parseEventToData(event, destinationInfo);
+    this._destinationInfo = destinationInfo;
+    this._currentOffersOfType = currentOffersOfType;
     this._isEdit = isEdit;
 
     this._closeClickHandler = this._closeClickHandler.bind(this);
@@ -166,7 +170,7 @@ export default class EditForm extends SmartView {
   }
 
   getTemplate() {
-    return createEditFormTemplate(this._data, this._isEdit);
+    return createEditFormTemplate(this._data, this._currentOffersOfType, this._isEdit);
   }
 
   _closeClickHandler(evt) {
@@ -183,7 +187,7 @@ export default class EditForm extends SmartView {
     evt.preventDefault();
     const eventOffers = [];
     const eventOfferElements = this.getElement().querySelectorAll('.event__offer-checkbox');
-    const offersOfType = allOffers.find((item) => item.type === this._data.type).offers.slice();
+    const offersOfType = this._currentOffersOfType.offers;
 
     eventOfferElements.forEach((element) => {
       if (element.checked) {
@@ -213,20 +217,15 @@ export default class EditForm extends SmartView {
 
   _changeDestinationHandler(evt) {
     evt.preventDefault();
-    const inputDestination = evt.currentTarget;
-    if (!DESTINATIONS.some((destination) => destination === inputDestination.value)) {
-      this.updateData({
-        destination: inputDestination.value,
-      }, true);
-      return;
-    }
 
-    const information = allDestinations.find((item) => item.name === inputDestination.value);
+    const inputDestination = evt.currentTarget;
+
+    this._destinationInfo = this._callback.changeDestination(inputDestination.value);
     this.updateData({
       destination: inputDestination.value,
-      information,
-      isDescription: !!information.description,
-      isPhotos: Boolean(information.pictures && information.pictures.length),
+      information: this._destinationInfo,
+      isDescription: !!this._destinationInfo.description,
+      isPhotos: Boolean(this._destinationInfo.pictures && this._destinationInfo.pictures.length),
     });
   }
 
@@ -258,8 +257,8 @@ export default class EditForm extends SmartView {
     this.updateData(EditForm.parseEventToData(event));
   }
 
-  static parseEventToData(event) {
-    const information = (event.destination) ? allDestinations.find((item) => item.name === event.destination) : null;
+  static parseEventToData(event, destinationInfo) {
+    const information = (event.destination) ? destinationInfo : null;
     return Object.assign(
       {},
       event,

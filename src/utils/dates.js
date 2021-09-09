@@ -1,4 +1,4 @@
-import {getLeadingZero} from '../utils';
+import {getLeadingZero} from '../utils/common';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
