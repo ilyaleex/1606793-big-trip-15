@@ -1,4 +1,4 @@
-import {getRandomInt, getRandomArrayElements} from '../utils';
+import {getRandomInt, getRandomArrayElements} from '../utils/common';
 import {DESTINATIONS} from './waypoint-mocks';
 import {plugImage} from './waypoint-mocks';
 

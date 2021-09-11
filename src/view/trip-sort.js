@@ -1,5 +1,5 @@
 import AbstractView from './abstract';
-import {SortType} from '../mock/waypoint-mocks';
+import {SortType} from '../const';
 
 export const createTripSortTemplate = () => (
   `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">

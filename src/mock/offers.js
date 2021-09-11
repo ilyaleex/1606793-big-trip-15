@@ -1,5 +1,5 @@
-import {getRandomInt, getRandomArrayElement} from '../utils';
-import {EVENT_TYPES} from './waypoint-mocks';
+import {getRandomInt, getRandomArrayElement} from '../utils/common';
+import {EVENT_TYPES} from '../const';
 
 const MAX_COUNT_OFFERS = 5;
 

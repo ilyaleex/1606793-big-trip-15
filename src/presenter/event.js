@@ -1,4 +1,4 @@
-import EditFormView from '../view/editing-form';
+import EditFormView from '../view/edit-form';
 import EventView from '../view/event';
 import {RenderPosition, render, replace, remove} from '../utils/render';
 
