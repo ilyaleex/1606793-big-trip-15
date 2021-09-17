@@ -1,11 +1,13 @@
 import EventFiltersView from '../view/filters';
 import {FilterType, UpdateType} from '../const';
 import {render, remove, replace, RenderPosition} from '../utils/render';
+import {filter} from '../utils/filter';
 
 export default class Filters {
-  constructor(filterContainer, filterModel) {
+  constructor(filterContainer, filterModel, eventsModel) {
     this._filterContainer = filterContainer;
     this._filterModel = filterModel;
+    this._eventsModel = eventsModel;
 
     this._filterComponent = null;
 
@@ -13,13 +15,14 @@ export default class Filters {
     this._handleChangeFilterType = this._handleChangeFilterType.bind(this);
 
     this._filterModel.addObserver(this._handleModelEvent);
+    this._eventsModel.addObserver(this._handleModelEvent);
   }
 
-  init() {
+  init(isDisabled = false) {
     const filters = this._getFilters();
     const prevFilterComponent = this._filterComponent;
 
-    this._filterComponent = new EventFiltersView(filters, this._filterModel.getFilter());
+    this._filterComponent = new EventFiltersView(filters, this._filterModel.getFilter(), isDisabled);
     this._filterComponent.setChangeFilterTypeHandler(this._handleChangeFilterType);
 
     if (prevFilterComponent === null) {
@@ -36,18 +39,23 @@ export default class Filters {
   }
 
   _getFilters() {
+    const tasks = this._eventsModel.getEvents();
+
     return [
       {
         type: FilterType.EVERYTHING,
         name: 'Everything',
+        count: filter[FilterType.EVERYTHING](tasks).length,
       },
       {
         type: FilterType.FUTURE,
         name: 'Future',
+        count: filter[FilterType.FUTURE](tasks).length,
       },
       {
         type: FilterType.PAST,
         name: 'Past',
+        count: filter[FilterType.PAST](tasks).length,
       },
     ];
   }

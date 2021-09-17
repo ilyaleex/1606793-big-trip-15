@@ -3,7 +3,9 @@ import {
   convertDateToISO,
   humanizeDateMonthDay,
   humanizeTime,
-  calculateTimeDifference
+  calculateTimeSpend,
+  humanizeTimeSpend,
+  calculateDuration
 } from '../utils/dates';
 
 
@@ -22,14 +24,16 @@ const createSelectedOffersTemplate = (offers) => (
   </ul>`
 );
 
-const createEventTemplate = (point) => {
-  const {type, destination, offers, timeStart, timeEnd, price, isFavorite} = point;
+const createEventTemplate = (event) => {
+  const {type, destination, offers, timeStart, timeEnd, price, isFavorite} = event;
 
   const selectedOffers = (offers.length > 0) ? createSelectedOffersTemplate(offers) : '';
 
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn';
+
+  const duration = humanizeTimeSpend(calculateTimeSpend(calculateDuration(event)));
 
   return `<li class="trip-events__item">
     <div class="event">
@@ -44,7 +48,7 @@ const createEventTemplate = (point) => {
           &mdash;
           <time class="event__end-time" datetime="${convertDateToISO(timeEnd)}">${humanizeTime(timeEnd)}</time>
         </p>
-        <p class="event__duration">${calculateTimeDifference(timeEnd, timeStart)}</p>
+        <p class="event__duration">${duration}</p>
       </div>
       <p class="event__price">
         &euro;&nbsp;<span class="event__price-value">${price}</span>
@@ -64,14 +68,14 @@ const createEventTemplate = (point) => {
 };
 
 export default class Event extends AbstractView {
-  constructor(point) {
+  constructor(event) {
     super();
-    this._point = point;
+    this._event = event;
     this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
-    return createEventTemplate(this._point);
+    return createEventTemplate(this._event);
   }
 
   _editClickHandler(evt) {
