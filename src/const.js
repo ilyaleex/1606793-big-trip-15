@@ -11,9 +11,9 @@ export const EVENT_TYPES = [
 ];
 
 export const FilterType = {
-  EVERYTHING: 'Everything',
-  FUTURE: 'Future',
-  PAST: 'Past',
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PAST: 'past',
 };
 
 export const SortType = {
@@ -23,9 +23,15 @@ export const SortType = {
 };
 
 export const UserAction = {
-  UPDATE_TASK: 'UPDATE_TASK',
-  ADD_TASK: 'ADD_TASK',
-  DELETE_TASK: 'DELETE_TASK',
+  UPDATE_EVENT: 'UPDATE_EVENT',
+  ADD_EVENT: 'ADD_EVENT',
+  DELETE_EVENT: 'DELETE_EVENT',
+};
+
+export const MenuItem = {
+  ADD_NEW_EVENT: 'ADD_NEW_EVENT',
+  TABLE: 'TABLE',
+  STATS: 'STATS',
 };
 
 export const UpdateType = {

@@ -1,6 +1,8 @@
 import EditFormView from '../view/edit-form';
 import EventView from '../view/event';
 import {RenderPosition, render, replace, remove} from '../utils/render';
+import {calculateDuration, isDatesEqual} from '../utils/dates';
+import {UserAction, UpdateType} from '../const';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -8,8 +10,10 @@ const Mode = {
 };
 
 export default class Event {
-  constructor(eventListContainer, changeData, changeMode) {
+  constructor(eventListContainer, destinationsModel, offersModel, changeData, changeMode) {
     this._eventListContainer = eventListContainer;
+    this._destinationsModel = destinationsModel;
+    this._offersModel = offersModel;
     this._changeData = changeData;
     this._changeMode = changeMode;
 
@@ -19,6 +23,7 @@ export default class Event {
 
     this._handleEditClick = this._handleEditClick.bind(this);
     this._handleCloseClick = this._handleCloseClick.bind(this);
+    this._handleDeleteClick = this._handleDeleteClick.bind(this);
     this._handleSubmitForm = this._handleSubmitForm.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._escKeydownHandler = this._escKeydownHandler.bind(this);
@@ -30,13 +35,15 @@ export default class Event {
     const prevEventComponent = this._eventComponent;
     const prevEditFormComponent = this._editFormComponent;
 
+
     this._eventComponent = new EventView(event);
-    this._editFormComponent = new EditFormView(event, true);
+    this._editFormComponent = new EditFormView(event, this._destinationsModel.getDestinations(), this._offersModel.getOffers(), true);
 
     this._eventComponent.setEditClickHandler(this._handleEditClick);
     this._eventComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this._editFormComponent.setCloseClickHandler(this._handleCloseClick);
     this._editFormComponent.setSubmitFormHandler(this._handleSubmitForm);
+    this._editFormComponent.setDeleteClickHandler(this._handleDeleteClick);
 
     if (prevEventComponent === null || prevEditFormComponent === null) {
       render(this._eventListContainer, this._eventComponent, RenderPosition.BEFOREEND);
@@ -84,7 +91,6 @@ export default class Event {
       evt.preventDefault();
       this._editFormComponent.reset(this._event);
       this._replaceFormToEvent();
-      document.removeEventListener('keydown', this._escKeydownHandler);
     }
   }
 
@@ -96,13 +102,28 @@ export default class Event {
     this._replaceFormToEvent();
   }
 
-  _handleSubmitForm(task) {
-    this._changeData(task);
+  _handleSubmitForm(event) {
+    const isDateStartEqual = isDatesEqual(this._event.timeStart, event.timeStart);
+    const isDurationEqual = calculateDuration(this._event) === calculateDuration(event);
+    const isPriceEqual = this._event.price === event.price;
+    const isOffersPriceEqual = this._event.offers.reduce((sum, offer) => sum + offer.price, 0) === event.offers.reduce((sum, offer) => sum + offer.price, 0);
+    const isDestinationEqual = this._event.destination === event.destination;
+    const isDateEndEqual = isDatesEqual(this._event.timeEnd, event.timeEnd);
+
+    const isMinorUpdate = !isPriceEqual || !isOffersPriceEqual || !isDestinationEqual || !isDateEndEqual;
+
+    this._changeData(UserAction.UPDATE_EVENT, isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH, event, {isDateStartEqual, isDurationEqual, isPriceEqual});
     this._replaceFormToEvent();
+  }
+
+  _handleDeleteClick(event) {
+    this._changeData(UserAction.DELETE_EVENT, UpdateType.MAJOR, event);
   }
 
   _handleFavoriteClick() {
     this._changeData(
+      UserAction.UPDATE_EVENT,
+      UpdateType.PATCH,
       Object.assign(
         {},
         this._event,

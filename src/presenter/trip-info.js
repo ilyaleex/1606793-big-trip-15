@@ -2,6 +2,7 @@ import TripInfoView from '../view/trip-info';
 import RouteInfoView from '../view/route-info';
 import TripPriceView from '../view/trip-price';
 import {render, replace, remove, RenderPosition} from '../utils/render';
+import {UpdateType} from '../const';
 
 export default class TripInfo {
   constructor(boardHeaderContainer, eventsModel) {
@@ -14,6 +15,10 @@ export default class TripInfo {
     this._tripPriceComponent = null;
 
     render(this._boardHeaderContainer, this._tripInfoComponent, RenderPosition.AFTERBEGIN);
+
+    this._handleModelEvent = this._handleModelEvent.bind(this);
+
+    this._eventsModel.addObserver(this._handleModelEvent);
   }
 
   init() {
@@ -42,5 +47,11 @@ export default class TripInfo {
 
     prevRouteInfoComponent.removeElement();
     prevPriceComponent.removeElement();
+  }
+
+  _handleModelEvent(updateType) {
+    if (updateType === UpdateType.MINOR || updateType === UpdateType.MAJOR || updateType === UpdateType.RESET) {
+      this.init();
+    }
   }
 }

@@ -1,5 +1,3 @@
-import {v4 as uuidv4} from 'uuid';
-
 export const getRandomInt = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -19,19 +17,3 @@ export function getRandomArrayElements (array, count) {
 }
 
 export const getLeadingZero = (number) => (number < 10) ? `0${number}` : `${number}`;
-
-export const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
-
-  if (index === -1) {
-    return items;
-  }
-
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
-};
-
-export const getRandomId = () => uuidv4;

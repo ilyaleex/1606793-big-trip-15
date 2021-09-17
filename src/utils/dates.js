@@ -15,12 +15,16 @@ export const humanizeDateMonthDay = (date) => dayjs(date).format('MMM D').toUppe
 export const humanizeDateDayMonth = (date) => dayjs(date).format('D MMM').toUpperCase();
 export const humanizeTime = (date) => dayjs(date).format('HH:mm');
 
-export const calculateTimeDifference = (dateA, dateB) => {
-  const difference = dateA - dateB;
-  const countOfDay = dayjs.duration(difference, 'millisecond').days();
-  const countOfHour = dayjs.duration(difference, 'millisecond').hours() % 24;
-  const countOfMinutes = dayjs.duration(difference, 'millisecond').minutes() % 60;
+export const calculateDuration = (event) => event.timeEnd - event.timeStart;
 
+export const calculateTimeSpend = (timeDifference) => {
+  const countOfDay = dayjs.duration(timeDifference, 'millisecond').days();
+  const countOfHour = dayjs.duration(timeDifference, 'millisecond').hours() % 24;
+  const countOfMinutes = dayjs.duration(timeDifference, 'millisecond').minutes() % 60;
+  return {countOfDay, countOfHour, countOfMinutes};
+};
+
+export const humanizeTimeSpend = ({countOfDay, countOfHour, countOfMinutes}) => {
   if (countOfDay > 0) {
     return `${getLeadingZero(countOfDay)}D ${getLeadingZero(countOfHour)}H ${getLeadingZero(countOfMinutes)}M`;
   } else if (countOfHour > 0) {
@@ -30,7 +34,7 @@ export const calculateTimeDifference = (dateA, dateB) => {
   return `${getLeadingZero(countOfMinutes)}M`;
 };
 
-export const calculateDuration = (event) => event.timeEnd - event.timeStart;
+export const isDatesEqual = (dateA, dateB) =>  (dateA === null && dateB === null) ? true : dayjs(dateA).isSame(dateB, 'D');
 
 export const compareTimeStart = (pointA, pointB) => pointA.timeStart - pointB.timeStart;
 export const compareDuration = (eventB, eventA) => calculateDuration(eventB) - calculateDuration(eventA);
