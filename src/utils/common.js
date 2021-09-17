@@ -1,5 +1,3 @@
-import {v4 as uuidv4} from 'uuid';
-
 export const getRandomInt = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
