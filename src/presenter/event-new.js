@@ -2,7 +2,6 @@ import {EVENT_TYPES} from '../const';
 import EditFormView from '../view/edit-form';
 import {UpdateType, UserAction} from '../const';
 import {render, remove, RenderPosition} from '../utils/render';
-import {nanoid} from 'nanoid';
 import dayjs from 'dayjs';
 
 const BLANK_EVENT = {
@@ -30,12 +29,11 @@ export default class EventNew {
   }
 
   init(callback) {
-    this.destroyCallback = callback;
+    this._destroyCallback = callback;
 
     if (this._editFormComponent !== null) {
       return;
     }
-
 
     this._editFormComponent = new EditFormView(BLANK_EVENT, this._destinationsModel.getDestinations(), this._offersModel.getOffers());
     this._editFormComponent.setSubmitFormHandler(this._handleSubmitForm);
@@ -60,8 +58,27 @@ export default class EventNew {
     document.removeEventListener('keydown', this._escKeyDownHandler);
   }
 
+  setSaving() {
+    this._editFormComponent.updateData({
+      isDisabled: true,
+      isSaving: true,
+    });
+  }
+
+  setAborting() {
+    const resetFormState = () => {
+      this._editFormComponent.updateData({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false,
+      });
+    };
+
+    this._editFormComponent.shake(resetFormState);
+  }
+
   _handleSubmitForm(event) {
-    this._changeData(UserAction.ADD_EVENT, UpdateType.MAJOR, Object.assign({id: nanoid()}, event));
+    this._changeData(UserAction.ADD_EVENT, UpdateType.MAJOR, Object.assign({isFavorite: false}, event));
     this.destroy();
   }
 

@@ -4,15 +4,19 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {countEventsByType, sumCostEventByType, sumDurationEventsByType} from '../utils/statistics';
 import {calculateTimeSpend, humanizeTimeSpend} from '../utils/dates';
 
+const BAR_HEIGHT = 55;
+
+const compareValue = (itemA, itemB) => itemB.value - itemA.value;
+
 const renderMoneyChart = (moneyCtx, events, types) => {
-  const moneyByType = types.map((type) => sumCostEventByType(events, type));
+  const sortedMoney = types.map((type) => Object.assign({}, {label: type, value: sumCostEventByType(events, type)})).sort(compareValue);
   return new Chart(moneyCtx, {
     plugins: [ChartDataLabels],
     type: 'horizontalBar',
     data: {
-      labels: types,
+      labels:  sortedMoney.map((item) => item.label),
       datasets: [{
-        data: moneyByType,
+        data:  sortedMoney.map((item) => item.value),
         backgroundColor: '#ffffff',
         hoverBackgroundColor: '#ffffff',
         anchor: 'start',
@@ -73,14 +77,14 @@ const renderMoneyChart = (moneyCtx, events, types) => {
 };
 
 const renderTypeChart = (typeCtx, events, types) => {
-  const countsByType = types.map((type) => countEventsByType(events, type));
+  const sortedCountsByType = types.map((type) => Object.assign({}, {label: type, value: countEventsByType(events, type)})).sort(compareValue);
   return new Chart(typeCtx, {
     plugins: [ChartDataLabels],
     type: 'horizontalBar',
     data: {
-      labels: types,
+      labels: sortedCountsByType.map((item) => item.label),
       datasets: [{
-        data: countsByType,
+        data: sortedCountsByType.map((item) => item.value),
         backgroundColor: '#ffffff',
         hoverBackgroundColor: '#ffffff',
         anchor: 'start',
@@ -266,7 +270,6 @@ export default class Statistics extends SmartView {
     const typeCtx = this.getElement().querySelector('#type');
     const timeCtx = this.getElement().querySelector('#time-spend');
 
-    const BAR_HEIGHT = 55;
     moneyCtx.height = BAR_HEIGHT * this._eventTypes.length;
     typeCtx.height = BAR_HEIGHT * this._eventTypes.length;
     timeCtx.height = BAR_HEIGHT * this._eventTypes.length;

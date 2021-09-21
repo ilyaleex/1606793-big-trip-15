@@ -38,15 +38,15 @@ export default class Filters extends AbstractView {
     return createFiltersTemplate(this._filterItems, this.currentFilterType, this._isDisabled);
   }
 
+  setChangeFilterTypeHandler(callback) {
+    this._callback.changeFilterType = callback;
+    this.getElement().addEventListener('change', this._changeFilterTypeHandler);
+  }
+
   _changeFilterTypeHandler(evt) {
     evt.preventDefault();
 
     this._callback.changeFilterType(evt.target.value);
-  }
-
-  setChangeFilterTypeHandler(callback) {
-    this._callback.changeFilterType = callback;
-    this.getElement().addEventListener('change', this._changeFilterTypeHandler);
   }
 }
 

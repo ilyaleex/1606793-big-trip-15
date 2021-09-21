@@ -14,13 +14,17 @@ export default class NewEventButton extends AbstractView {
     return createNewEventButtonTemplate();
   }
 
-  _menuClickHandler(evt) {
-    evt.preventDefault();
-    this._callback.menuClick(MenuItem.ADD_NEW_EVENT);
+  setDisabledState(isDisabled) {
+    this.getElement().disabled = isDisabled;
   }
 
   setMenuClickHandler(callback) {
     this._callback.menuClick = callback;
     this.getElement().addEventListener('click', this._menuClickHandler);
+  }
+
+  _menuClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.menuClick(MenuItem.ADD_NEW_EVENT);
   }
 }

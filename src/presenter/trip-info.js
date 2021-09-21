@@ -50,7 +50,10 @@ export default class TripInfo {
   }
 
   _handleModelEvent(updateType) {
-    if (updateType === UpdateType.MINOR || updateType === UpdateType.MAJOR || updateType === UpdateType.RESET) {
+    if (updateType === UpdateType.MINOR
+      || updateType === UpdateType.MAJOR
+      || updateType === UpdateType.RESET
+      || updateType === UpdateType.INIT) {
       this.init();
     }
   }
