@@ -10,8 +10,4 @@ export default class Offers {
   getOffers(type) {
     return this._offers.get(type);
   }
-
-  getEventTypes() {
-    return [...this._offers.keys()];
-  }
 }

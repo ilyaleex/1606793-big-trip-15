@@ -39,4 +39,5 @@ export const UpdateType = {
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
   RESET: 'RESET',
+  INIT: 'INIT',
 };
