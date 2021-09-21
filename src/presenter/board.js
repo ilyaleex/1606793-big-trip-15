@@ -49,7 +49,7 @@ export default class Board {
     this._clearBoard({resetSortType: true});
 
     remove(this._eventListComponent);
-    remove(this._eventSortComponent);
+    remove(this._tripSortComponent);
 
     this._eventsModel.removeObserver(this._handleModelEvent);
     this._filtersModel.removeObserver(this._handleModelEvent);
@@ -79,8 +79,8 @@ export default class Board {
   }
 
   _renderEventSort() {
-    render(this._boardMainContainer, this._eventSortComponent, RenderPosition.AFTERBEGIN);
-    this._eventSortComponent.setChangeSortTypeHandler(this._handleChangeSortType);
+    render(this._boardMainContainer, this._tripSortComponent, RenderPosition.AFTERBEGIN);
+    this._tripSortComponent.setChangeSortTypeHandler(this._handleChangeSortType);
   }
 
   _renderEvents() {
@@ -127,7 +127,7 @@ export default class Board {
 
     if (resetSortType) {
       this._currentSortType = SortType.DAY;
-      const prevSortComponent = this._eventSortComponent;
+      const prevSortComponent = this._tripSortComponent;
       this._tripSortComponent = new TripSortView();
       replace(this._tripSortComponent, prevSortComponent);
       remove(prevSortComponent);
