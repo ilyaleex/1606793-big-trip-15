@@ -1,4 +1,4 @@
-export default class Offers {
+class Offers {
   constructor() {
     this._offers = new Map();
   }
@@ -11,3 +11,5 @@ export default class Offers {
     return this._offers;
   }
 }
+
+export default Offers;

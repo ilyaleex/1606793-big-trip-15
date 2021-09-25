@@ -26,7 +26,7 @@ export const createTripSortTemplate = () => (
   </form>`
 );
 
-export default class TripSort extends AbstractView {
+class TripSort extends AbstractView {
   constructor() {
     super();
 
@@ -37,12 +37,15 @@ export default class TripSort extends AbstractView {
     return createTripSortTemplate();
   }
 
-  _changeSortTypeHandler(evt) {
-    this._callback.changeSortType(evt.target.dataset.sortType);
-  }
-
   setChangeSortTypeHandler(callback) {
     this._callback.changeSortType = callback;
     this.getElement().addEventListener('change', this._changeSortTypeHandler);
   }
+
+  _changeSortTypeHandler(evt) {
+    this._callback.changeSortType(evt.target.dataset.sortType);
+  }
 }
+
+export default TripSort;
+

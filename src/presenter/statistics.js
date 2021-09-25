@@ -2,7 +2,7 @@ import StatisticsView from '../view/statistics';
 import {remove, render, RenderPosition} from '../utils/render';
 import {EVENT_TYPES} from '../const';
 
-export default class Statistics {
+class Statistics {
   constructor(statisticsContainer, eventsModel) {
     this._statisticsContainer = statisticsContainer;
     this._eventsModel = eventsModel;
@@ -24,3 +24,5 @@ export default class Statistics {
     }
   }
 }
+
+export default Statistics;

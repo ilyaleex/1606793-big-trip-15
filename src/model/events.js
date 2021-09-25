@@ -1,6 +1,7 @@
 import AbstractObserver from '../utils/abstract-observer';
+import {UpdateType} from '../const';
 
-export default class Events extends AbstractObserver {
+class Events extends AbstractObserver {
   constructor() {
     super();
     this._events = [];
@@ -8,6 +9,7 @@ export default class Events extends AbstractObserver {
 
   setEvents(events) {
     this._events = events.slice();
+    this._notify(UpdateType.INIT, this._events);
   }
 
   getEvents() {
@@ -94,3 +96,6 @@ export default class Events extends AbstractObserver {
     return adaptedEvent;
   }
 }
+
+export default Events;
+

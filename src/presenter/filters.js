@@ -3,7 +3,7 @@ import {FilterType, UpdateType} from '../const';
 import {render, remove, replace, RenderPosition} from '../utils/render';
 import {filter} from '../utils/filter';
 
-export default class Filters {
+class Filters {
   constructor(filterContainer, filterModel, eventsModel) {
     this._filterContainer = filterContainer;
     this._filterModel = filterModel;
@@ -68,3 +68,5 @@ export default class Filters {
     this._filterModel.setFilter(UpdateType.MAJOR, type);
   }
 }
+
+export default Filters;

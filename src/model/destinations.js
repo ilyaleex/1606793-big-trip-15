@@ -1,4 +1,4 @@
-export default class Destinations {
+class Destinations {
   constructor() {
     this._destinations = new Map();
   }
@@ -11,3 +11,6 @@ export default class Destinations {
     return this._destinations;
   }
 }
+
+export default Destinations;
+

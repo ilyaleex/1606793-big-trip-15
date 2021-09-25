@@ -69,7 +69,7 @@ const createEventTemplate = (event) => {
   </li>`;
 };
 
-export default class Event extends AbstractView {
+class Event extends AbstractView {
   constructor(event) {
     super();
     this._event = event;
@@ -102,3 +102,4 @@ export default class Event extends AbstractView {
   }
 }
 
+export default Event;

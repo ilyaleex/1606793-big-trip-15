@@ -8,7 +8,7 @@ const NoEventMessage = {
 
 const createNoEventTemplate = (filter) => `<p class="trip-events__msg">${NoEventMessage[filter.toUpperCase()]}</p>`;
 
-export default class NoEvent extends AbstractView {
+class NoEvent extends AbstractView {
   constructor(filter) {
     super();
     this._filter = filter;
@@ -18,3 +18,5 @@ export default class NoEvent extends AbstractView {
     return createNoEventTemplate(this._filter);
   }
 }
+
+export default NoEvent;

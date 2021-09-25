@@ -17,9 +17,11 @@ const createDestinationOptionTemplate = (destination) => `<option value="${desti
 
 const createOfferTemplate = ({title, price}, isChecked = false, id, disabledStatus) => {
   const checkedStatus = (isChecked) ? 'checked' : '';
+  const eventTitle = title.split(' ').join('-');
+
   return `<div class="event__offer-selector">
-    <input class="event__offer-checkbox  visually-hidden" id="event-offer-${title.split(' ').join('-')}-${id}" type="checkbox" name="event-offer-${title.split(' ').join('-')}" ${checkedStatus} ${disabledStatus}>
-    <label class="event__offer-label" for="event-offer-${title.split(' ').join('-')}-${id}">
+    <input class="event__offer-checkbox  visually-hidden" id="event-offer-${eventTitle}-${id}" type="checkbox" name="event-offer-${eventTitle}" ${checkedStatus} ${disabledStatus}>
+    <label class="event__offer-label" for="event-offer-${eventTitle}-${id}">
       <span class="event__offer-title">${title}</span>
       &plus;&euro;&nbsp;
       <span class="event__offer-price">${price}</span>
@@ -139,7 +141,7 @@ const createEditFormTemplate = (data, destinationsInfo, offersForTypes, isEdit) 
             <span class="visually-hidden">Price</span>
             &euro;
           </label>
-          <input class="event__input  event__input--price" id="event-price-${id}" type="text" name="event-price" value="${price}" required ${disabledStatus}>
+          <input class="event__input  event__input--price" id="event-price-${id}" type="number" name="event-price" value="${price}" required ${disabledStatus}>
         </div>
 
         <button class="event__save-btn  btn  btn--blue" type="submit">${savingStatus}</button>
@@ -155,7 +157,7 @@ const createEditFormTemplate = (data, destinationsInfo, offersForTypes, isEdit) 
   </li>`;
 };
 
-export default class EditForm extends SmartView {
+class EditForm extends SmartView {
   constructor(event, destinationsInfo, offers, isEdit = false) {
     super();
     this._destinationsInfo = destinationsInfo;
@@ -363,4 +365,6 @@ export default class EditForm extends SmartView {
     return data;
   }
 }
+
+export default EditForm;
 

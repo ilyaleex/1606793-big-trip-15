@@ -112,15 +112,15 @@ apiWithProvider.getInitialData()
   })
   .then(() => apiWithProvider.getPoints())
   .then((events) => {
-    eventsModel.setEvents(UpdateType.INIT, events);
+    eventsModel.setEvents(events);
     renderControls();
   })
   .catch(() => {
     if (isInitialData) {
-      eventsModel.setEvents(UpdateType.INIT, []);
+      eventsModel.setEvents([]);
       renderControls(!isInitialData);
     } else {
-      eventsModel.setEvents(UpdateType.INIT, []);
+      eventsModel.setEvents([]);
       renderControls(!isInitialData);
       toast('Error loading data');
     }

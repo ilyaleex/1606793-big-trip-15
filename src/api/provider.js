@@ -12,7 +12,7 @@ const createStoreStructure = (items) =>
       [current.id]: current,
     }), {});
 
-export default class Provider {
+class Provider {
   constructor(api, eventsStore, destinationsStore, offersStore) {
     this._api = api;
     this._eventsStore = eventsStore;
@@ -103,3 +103,5 @@ export default class Provider {
     return Promise.reject(new Error('Sync data failed'));
   }
 }
+
+export default Provider;

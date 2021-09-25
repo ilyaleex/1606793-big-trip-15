@@ -17,7 +17,7 @@ export const State = {
   ABORTING: 'ABORTING',
 };
 
-export default class Event {
+class Event {
   constructor(eventListContainer, destinationsModel, offersModel, changeData, changeMode) {
     this._eventListContainer = eventListContainer;
     this._destinationsModel = destinationsModel;
@@ -187,3 +187,5 @@ export default class Event {
     }
   }
 }
+
+export default Event;

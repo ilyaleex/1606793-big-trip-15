@@ -7,7 +7,7 @@ const createFilterTemplate = (filter, currentFilterType, isDisabled) => {
 
   return (
     `<div class="trip-filters__filter">
-      <input id="filter-${type}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${type}" ${checkedStatus} ${disabledStatus}}>
+      <input id="filter-${type}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${type}" ${checkedStatus} ${disabledStatus}>
       <label class="trip-filters__filter-label" for="filter-${type}">${name}</label>
     </div>`
   );
@@ -24,7 +24,7 @@ const createFiltersTemplate = (filters, currentFilterType, isDisabled) => {
   );
 };
 
-export default class Filters extends AbstractView {
+class Filters extends AbstractView {
   constructor(filterItems, currentFilterType, isDisabled) {
     super();
     this._filterItems = filterItems;
@@ -49,4 +49,6 @@ export default class Filters extends AbstractView {
     this._callback.changeFilterType(evt.target.value);
   }
 }
+
+export default Filters;
 

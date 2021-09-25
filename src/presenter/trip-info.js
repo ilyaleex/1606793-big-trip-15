@@ -4,7 +4,7 @@ import TripPriceView from '../view/trip-price';
 import {render, replace, remove, RenderPosition} from '../utils/render';
 import {UpdateType} from '../const';
 
-export default class TripInfo {
+class TripInfo {
   constructor(boardHeaderContainer, eventsModel) {
     this._boardHeaderContainer = boardHeaderContainer;
     this._eventsModel = eventsModel;
@@ -58,3 +58,5 @@ export default class TripInfo {
     }
   }
 }
+
+export default TripInfo;

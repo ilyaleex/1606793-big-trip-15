@@ -13,7 +13,7 @@ const BLANK_EVENT = {
   price: '',
 };
 
-export default class EventNew {
+class EventNew {
   constructor(eventListContainer, destinationsModel, offersModel, changeData) {
     this._eventListContainer = eventListContainer;
     this._changeData = changeData;
@@ -93,3 +93,6 @@ export default class EventNew {
     }
   }
 }
+
+export default EventNew;
+

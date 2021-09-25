@@ -8,7 +8,7 @@ const createMenuTemplate = () => (
    </nav>`
 );
 
-export default class SiteMenu extends AbstractView {
+class SiteMenu extends AbstractView {
   constructor() {
     super();
 
@@ -40,5 +40,6 @@ export default class SiteMenu extends AbstractView {
     evt.preventDefault();
     this._callback.menuClick(evt.target.dataset.menuItemName);
   }
-
 }
+
+export default SiteMenu;

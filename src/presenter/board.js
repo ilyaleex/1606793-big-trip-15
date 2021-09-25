@@ -9,7 +9,7 @@ import {FilterType, SortType, UserAction, UpdateType} from '../const';
 import {compareTimeStart, compareDuration, comparePrice} from '../utils/dates';
 import {filter} from '../utils/filter';
 
-export default class Board {
+class Board {
   constructor(boardMainContainer, eventsModel, filtersModel, destinationsModel, offersModel, api) {
     this._boardMainContainer = boardMainContainer;
     this._eventsModel = eventsModel;
@@ -211,3 +211,5 @@ export default class Board {
     this._eventPresenter.forEach((eventPresenter) => eventPresenter.resetView());
   }
 }
+
+export default Board;

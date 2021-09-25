@@ -4,9 +4,8 @@ import {compareTimeStart, humanizeDateDayMonth, humanizeDateMonthDay} from '../u
 const MAX_DESTINATIONS = 3;
 
 const createRouteTemplate = (destinations) => (destinations.length <= MAX_DESTINATIONS)
-  ? destinations.join('&nbsp;&mdash;&nbsp;')
-  : `${destinations.length - 1}&nbsp;&mdash;&nbsp;&hellip;&nbsp;&mdash;&nbsp;${destinations[0]}`;
-
+  ? destinations.map((destination) => destination.name).join('&nbsp;&mdash;&nbsp;')
+  : `${destinations[0].name}&nbsp;&mdash;&nbsp;&hellip;&nbsp;&mdash;&nbsp;${destinations[destinations.length - 1].name}`;
 
 const createDatesTemplate =  (events) => {
   const dateStart = events[events.length - 1].timeStart;
@@ -30,7 +29,7 @@ const createRouteInfoTemplate = (events) => {
   </div>`;
 };
 
-export default class RouteInfo extends AbstractView {
+class RouteInfo extends AbstractView {
   constructor(events) {
     super();
     this._events = events;
@@ -40,3 +39,5 @@ export default class RouteInfo extends AbstractView {
     return createRouteInfoTemplate(this._events.sort(compareTimeStart));
   }
 }
+
+export default RouteInfo;
